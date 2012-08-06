@@ -14,10 +14,27 @@ class AppDelegate
   end
   
   def startTimer(sender)
-    # This method is called when the start button is clicked.
+    if @timer.nil?
+      @time = 0.0
+      @timer = NSTimer
+      .scheduledTimerWithTimeInterval(0.1,
+                                      target: self,
+                                      selector: "timerHandler:",
+                                      userInfo: nil,
+                                      repeats: true)
+    end
   end
   
   def stopTimer(sender)
-    # This method is called when the stop button is clicked.
+    if @timer
+      @timer.invalidate
+      @timer = nil
+    end
+  end
+  
+  def timerHandler(userInfo)
+    @time += 0.1
+    string = sprintf("%.1f", @time)
+    textField.setStringValue(string)
   end
 end
